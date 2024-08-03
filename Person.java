@@ -92,12 +92,48 @@ class Person {
 			}
 		}
 		
-		private int partitionByAge
+		private int partitionByAge (int low, int high) {
+			Person pivot = queue.get(high);
+			int i = (low - 1);
+			for (int j = low; j < high; j++) {
+				if (queue.get(j).getAge() > pivot.getAge()) {
+					i++;
+				}
+			}
+			Person temp = queue.get(i + 1);
+			queue.set(i + 1, queue.get(high));
+			queue.set(high, temp);
+			return i + 1;
+		}
 		
 	}
-
+	
+public class Main {
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		Scanner scanner = new Scanner(System.in);
+		Queue queue = new Queue();
+		
+		for (int i = 0; i < 5; i++) {
+			System.out.println("Enter first name for person " + (i + 1) + ": ");
+			String firstName = scanner.nextLine();
+			System.out.println("Enter last name for person " + (i + 1) + ": ");
+			String lastName = scanner.nextLine();
+			System.out.println("Enter age for person " + (i + 1) + ": ");
+			int age = Integer.parseInt(scanner.nextLine());
+			
+			queue.enqueue(new Person(firstName, lastName, age));
+		}
+		
+		System.out.println("\nQueue contents:");
+		queue.display();
+		
+		System.out.println("\nQueue sorted by last name (descending):");
+		queue.quickSortByLastName();
+		queue.display();
+		
+		System.out.println("\nQueue sorted by age (descending):");
+		queue.quickSortByAge();
+		queue.display();
 
 	}
 
